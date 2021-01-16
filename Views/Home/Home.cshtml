@@ -1,7 +1,7 @@
-﻿@{
+@{
     ViewBag.Title = "Home";
-    //Layout = "~/Views/Shared/MasterView.cshtml";
-    Layout = "~/Views/Shared/BootstrapMaster.cshtml";
+    Layout = "~/Views/Shared/MasterView.cshtml";
+    //Layout = "~/Views/Shared/BootstrapMaster.cshtml";
 }
 
 <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -55,9 +55,20 @@ table th,td
 <option value="2">Cochin</option>
 </select><br />
 
+<select id="Cars" name="Cars" size="5" multiple="multiple">  
+    <option value="Merceders"> Merceders </option>  
+    <option value="BMW"> BMW </option>  
+    <option value="Jaguar"> Jaguar </option>  
+    <option value="Lamborghini"> Lamborghini </option>  
+    <option value="Ferrari"> Ferrari </option>  
+    <option value="Ford"> Ford </option>  
+    </select>
+    <br />
+    <input type="text" id="txtMulti" name="txtMulti" readonly="readonly" /><br />
 <br/>
 <input type="button" id="btnSubmit" name="btnSubmit" value="Submit" />&nbsp;&nbsp;&nbsp;  <input type="button" id="btnCheck" name="btnCheck" value="Check" />
 <br /><br />
+<input type="button" value="Multi select" onclick="getMultipleSelectedValue()"/>
 <div id="divDisp"></div>
 
 <table style='border:1px solid #000;border-collapse:collapse;padding:5px;'><tr>
@@ -401,6 +412,20 @@ table th,td
             return false;
         }
         return true;
+    }
+
+    function getMultipleSelectedValue() {
+        debugger;
+        $("#txtMulti").val("");
+        var x = document.getElementById("Cars");
+        for (var i = 0; i < x.options.length; i++) {
+            if (x.options[i].selected == true) {
+                //alert(x.options[i].value);
+                var currentVal = $('#txtMulti').val();
+                var newVal = currentVal + x.options[i].value+", ";
+                $('#txtMulti').val(newVal);
+            }
+        }
     }
 </script>
 
