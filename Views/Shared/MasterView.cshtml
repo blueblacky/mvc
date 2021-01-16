@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "MasterView";
+}
+
+<style>
+#main
+{
+    width:1080px;
+    height:700px;
+    float:left;
+    background:#f5d9d7;
+}
+#header
+{
+    width:1080px;
+    height:100px;
+    float:left;
+    background:#f7f5dc;
+}
+#content
+{
+    width:1080px;
+    height:550px;
+    float:left;
+    background:#edfce3;
+}
+#footer
+{
+    width:1080px;
+    height:50px;
+    float:left;
+    background:#e3fcfa;
+}
+</style>
+
+<h2>MasterView</h2>
+
+<div id="main">
+<div id="header">
+@Html.ActionLink("Code Express", 
+                        "Index", "Home")
+</div>
+<div id="content">
+  @RenderSection("featured", required: false)
+        <section >
+                @RenderBody()
+            </section>
+</div>
+<div id="footer">
+</div>
+</div>

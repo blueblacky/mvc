@@ -1,0 +1,410 @@
+﻿@{
+    ViewBag.Title = "Home";
+    //Layout = "~/Views/Shared/MasterView.cshtml";
+    Layout = "~/Views/Shared/BootstrapMaster.cshtml";
+}
+
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<style>
+table
+{
+    border:1px solid #000;
+    border-collapse:collapse;    
+}
+table th,td
+{
+    border:1px solid #000;
+    padding:5px;
+}
+
+</style>
+
+<div class="container">
+<h2>Registration</h2>
+<input type="text" id="txtId" name="txtId" readonly="readonly" /><br />
+<label >User Name</label><br />
+<input type="text" id="txtUname" name="txtUname" /><br />
+<label >Password</label><br />
+<input type="password" id="txtPass" name="txtPass" /><br />
+<label >Gender</label><br />
+<input type="radio" id="rdMale" name="gender" value="1" /><label>Male</label>
+<input type="radio" id="rdFemale" name="gender" value="2"/><label>Female</label><br />
+<label >Age</label><br />
+<select id="drpState" name="drpState">
+<option value="0">--Select--</option>
+<option value="1">Tamilnadu</option>
+<option value="2">Kerala</option>
+</select><br />
+<select id="drpTNCity" name="drpTNCity">
+<option value="0">--Select--</option>
+<option value="1">Chennai</option>
+<option value="2">Madurai</option>
+</select>
+<select id="drpKLCity" name="drpKLCity">
+<option value="0">--Select--</option>
+<option value="1">Ernakulam</option>
+<option value="2">Cochin</option>
+</select><br />
+
+<br/>
+<input type="button" id="btnSubmit" name="btnSubmit" value="Submit" />&nbsp;&nbsp;&nbsp;  <input type="button" id="btnCheck" name="btnCheck" value="Check" />
+<br /><br />
+<div id="divDisp"></div>
+
+<table style='border:1px solid #000;border-collapse:collapse;padding:5px;'><tr>
+<th>Uname</th><th>Pass</th><th>Gender</th><th>Gender Value</th><th>State</th><th>State Value</th><th>City</th><th>City Value</th>
+</tr>
+<tbody id="tval"></tbody>
+</table>
+
+<table id="table_id" class="table table-condensed table-striped table-hover">
+    <thead>
+    <tr>
+<th>ID</th><th>Uname</th><th>Pass</th><th>Gender</th><th>Gender Value</th><th>State</th><th>State Value</th><th>City</th><th>City Value</th><th id="ed">Edit</th>
+</tr>
+    </thead>
+   
+    </table>
+
+</div>
+     <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Message</h4>
+        </div>
+        <div class="modal-body">
+          <p>Data saved successfully.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+<script >
+
+    $(document).ready(
+    function () {
+        //alert("welcome");
+        $("#drpTNCity").hide();
+        $("#drpKLCity").hide();
+        
+        // $('#table_id').dataTable();
+
+        var json = [
+            {
+                "uname": "Ram",
+                "pass": "123",
+                "gender": "Male",
+                "gendervalue": "1",
+                "state": "tamilnadu",
+                "statevalue": "1"
+            },
+            {
+                "uname": "Bala",
+                "pass": "123",
+                "gender": "Male",
+                "gendervalue": "1",
+                "state": "tamilnadu",
+                "statevalue": "1"
+            },
+            {
+                "uname": "Kali",
+                "pass": "123",
+                "gender": "Male",
+                "gendervalue": "1",
+                "state": "tamilnadu",
+                "statevalue": "1"
+            },
+            {
+                "uname": "Siva",
+                "pass": "123",
+                "gender": "Male",
+                "gendervalue": "1",
+                "state": "tamilnadu",
+                "statevalue": "1"
+            },
+            {
+                "uname": "Sri",
+                "pass": "123",
+                "gender": "Male",
+                "gendervalue": "1",
+                "state": "tamilnadu",
+                "statevalue": "1"
+            }
+];
+
+        //        $("table #btn").on("click", "td", function () {
+        //            debugger;
+        //            alert($(this).text());
+        //        });
+
+
+        //        $('#table_id').DataTable({
+        //            data: json,
+        //            columns: [
+        //        { data: 'uname' },
+        //        { data: 'pass' },
+        //        { data: 'gender' },
+        //        { data: 'gendervalue' },
+        //        { data: "state" },
+        //        { data: "statevalue" }
+        //    ],
+        //            "pageLength": 5
+        //        });
+
+    });
+
+    $("#drpState").change(function () {
+        debugger;
+        if ($("#drpState").val() == 1) {
+            $("#drpTNCity").show();
+            $("#drpKLCity").hide();
+        }
+        else if ($("#drpState").val() == 2) {
+            $("#drpTNCity").hide();
+            $("#drpKLCity").show();
+        }
+        else {
+            $("#drpTNCity").hide();
+            $("#drpKLCity").hide();
+        }
+    });
+
+    var arrItems = [];      // THE ARRAY TO STORE JSON ITEMS.
+    var counter = 1;
+    var idx=0;
+
+//    $("#table_id").on('click', 'td', function () {
+//        alert('this is alert');
+//    });
+
+    $("#btnSubmit").click(function () {
+
+        if (validate()) {
+            //To delete values for edit option
+            if ($("#txtId").val() != null && $("#txtId").val() != '') {
+
+                debugger;
+                var table = $('#table_id').DataTable();
+
+                // Get column data
+                var data = table.data();
+
+                for (var i = 0; i < arrItems.length; i++) {
+
+                    if (arrItems[i]["id"] == 1) {
+                        idx = i;
+                    }
+                }
+
+                arrItems.splice(idx, 1); //To remove using index with number of rows specified.
+            }
+            //To delete values for edit option
+
+            var rGender, rvalue;
+            var tUname = $("#txtUname").val();
+            var tPass = $("#txtPass").val();
+            //        var rGender = $("input[name='gender']:checked").val();
+            //        if (rGender) {
+            //            alert("Your are a - " + rGender);
+            //        }
+            rvalue = $("#rdMale").prop("checked");
+            if (rvalue == true) {
+                rGender = "Male";
+            }
+            else {
+                rGender = "Female";
+            }
+            var selValue = $('input[name=gender]:checked').val();
+            var dState = $("#drpState").val();
+            var dStateText = $("#drpState option:selected").text();
+            if (dState == 1) {
+                var dCity = $("#drpTNCity").val();
+                var dCityText = $("#drpTNCity option:selected").text();
+            }
+            else if (dState == 2) {
+                var dCity = $("#drpKLCity").val();
+                var dCityText = $("#drpKLCity option:selected").text();
+            }
+            else {
+                $("#drpTNCity").hide();
+                $("#drpKLCity").hide();
+            }
+
+
+
+            //$("#divDisp").html(tUname + "<br/>" + tPass + "<br/>" + rGender + "<br/>" +selValue+"<br/>"+ dState + "<br/>" + dStateText);
+            //$("#tval").append("<tr id='tval'><td>" + tUname + "</td><td>" + tPass + "</td><td>" + rGender + "</td><td>" + selValue + "</td><td>" + dState + "</td><td>" + dStateText + "</td></tr></table>");
+            $("#tval").append("<tr><td>" + tUname + "</td><td>" + tPass + "</td><td>" + rGender + "</td><td>" + selValue + "</td><td>" + dStateText + "</td><td>" + dState + "</td><td>" + dCityText + "</td><td>" + dCity + "</td></tr>");
+
+            var valjson = [{ 'id': counter++, 'uname': tUname, 'pass': tPass, 'gender': rGender, 'gendervalue': selValue, 'state': dStateText, 'statevalue': dState, 'city': dCityText, 'cityvalue': dCity, 'edit': '<input type="button" id="btn" value="Edit" class="btnSelect"/>'}];
+
+
+            $.each(valjson, function (index, value) {
+                arrItems.push(value);       // PUSH THE VALUES INSIDE THE ARRAY.
+            });
+
+            debugger;
+            $('#table_id').DataTable({
+                destroy: true,
+                data: arrItems,
+                columns: [
+            { 'data': 'id' },
+        { 'data': 'uname' },
+        { 'data': 'pass' },
+        { 'data': 'gender' },
+        { 'data': 'gendervalue' },
+        { 'data': 'state' },
+        { 'data': 'statevalue' },
+        { 'data': 'city' },
+        { 'data': 'cityvalue' },
+        { 'data': 'edit' }
+
+    ],
+                "pageLength": 20
+            });
+
+
+            $("#myModal").modal(); //to show the modal popup
+
+            $("#txtId").val("");
+            $("#txtUname").val("");
+            $("#txtPass").val("");
+            $("#rdMale").prop("checked", false);
+            $("#rdFemale").prop("checked", false);
+            $("#drpState").val(0);
+            $("#drpTNCity").hide();
+            $("#drpKLCity").hide();
+        }
+        else {
+            alert('Username, password, Gender, State, City fields are mandatory');
+        }
+
+    });
+
+  
+
+    // code to read selected table row cell data (values).
+    $("#table_id").on('click', '.btnSelect', function () {
+        // get the current row
+        debugger;
+        var currentRow = $(this).closest("tr");
+
+        var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+        var col2 = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+        var col3 = currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+        var col4 = currentRow.find("td:eq(3)").text(); // get current row 4th TD
+        var col5 = currentRow.find("td:eq(6)").text(); // get current row 4th TD
+        var col6 = currentRow.find("td:eq(8)").text(); // get current row 4th TD
+
+        $("#txtId").val(col1);
+        $("#txtUname").val(col2);
+        $("#txtPass").val(col3);
+        if (col4 == 'Male') {
+            $("#rdMale").prop("checked", true);
+            $("#rdFemale").prop("checked", false);
+        }
+        else {
+            $("#rdMale").prop("checked", false);
+            $("#rdFemale").prop("checked", true);
+        }
+        $("#drpState").val(col5);
+        if (col5 == 1) {
+            $("#drpTNCity").val(col6);
+            $("#drpTNCity").show();
+            $("#drpKLCity").hide();
+        }
+        else if (col5 == 2) {
+            $("#drpKLCity").val(col6);
+            $("#drpTNCity").hide();
+            $("#drpKLCity").show();
+        }
+        else {
+            $("#drpTNCity").val(0);
+        }
+
+        var data = " Id : " + col1 + "\n uname : " + col2 + "\n pass : " + col3 + "\n gender : " + col4 + "\n state : " + col5 + "\n city : " + col6;
+
+        alert(data);
+    });
+
+    //To erase value in array
+    $("#btnCheck").click(function () {
+
+        debugger;
+        var table = $('#table_id').DataTable();
+
+        // Get column data
+        var data = table
+
+    .data();
+
+        // Find the first instance of `32`
+        //        var idx = data["id"];
+        //        var inx = data.indexOf(1);
+
+        //        // Replace with `33`
+        //        if (idx >= 0) {
+        //            data.splice(0, 1);
+
+        //        }
+        for (var i = 0; i < arrItems.length; i++) {
+
+            if (arrItems[i]["id"] == 1) {
+                idx = i;
+            }
+        }
+
+        arrItems.splice(idx, 1); //To remove using index with number of rows specified.
+
+    });
+    //To erase value in array
+
+    function validate() {
+        debugger;
+        var regex = /^[a-zA-Z ]*$/;
+
+        if ($("#txtUname").val() == null || $("#txtUname").val() == '') {
+            return false;
+        }
+        if ($("#txtPass").val() == null || $("#txtPass").val() == '') {
+            return false;
+        }
+        if ($("#rdMale").prop("checked")==false && $("#rdFemale").prop("checked")==false) {
+            return false;
+        }
+        if ($("#drpState").val() == 0) {
+            return false;
+        }
+        if ($("#drpTNCity").val() == 0 && $("#drpKLCity").val() == 0) {
+            return false;
+        }
+        if (!regex.test($("#txtUname").val())) {
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<!--https://www.yogihosting.com/jquery-datatables/-->
+<!--https://codepedia.info/jquery-get-table-cell-td-value-div/#:~:text=jQuery%3A%20code%20to%20get%20TD,looks%20like%20as%20written%20below.-->
+<!--https://stackoverflow.com/questions/3596089/how-to-remove-specific-value-from-array-using-jquery-->
+<!--https://datatables.net/reference/api/splice()-->
